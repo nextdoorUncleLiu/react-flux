@@ -3,14 +3,14 @@
 flux是一种架构思想，和MVC类似，但是更加简单清晰，flux实现方法有很多种，本项目采用的是facebook官方实现。
 
 
-## 安装flux
+### 安装flux
 
   ```sh
 	npm install flux
   ```
 
 
-## 了解flux
+### 了解flux
 
 在使用flux之前，首先我们要了解清楚flux到底是干什么的，只有理解了它真正的意思，才能更好的运用它。
 
@@ -31,11 +31,14 @@ flux是一种架构思想，和MVC类似，但是更加简单清晰，flux实现
 flux最大的特点，就是数据的 “单向流动”。
 
 
-## flux实现
+### flux实现
 
-### view （视图层）
+#### view （视图层）
 
   ```js
+
+	//View.jsx
+
 	import React,{Component} from 'react';
 	export class View extends Component{
 		constructor(props){
@@ -60,11 +63,12 @@ flux最大的特点，就是数据的 “单向流动”。
 通过控制器传过来的值对相应的内容做渲染，并绑定事件。
 
 
-### controller（控制器）
+#### controller（控制器）
 
   ```js
 
 	//Controller.jsx
+
 	import React,{Component} from 'react';
 	let ListStore = require('./../store/store');
 	let Action = require('./../action/action');
@@ -105,9 +109,11 @@ flux最大的特点，就是数据的 “单向流动”。
 这是视图层、动作层、数据层之间的一个控制器，用来把要显示的数据告诉视图层；在视图层做某些动作的时候，通过控制器告诉动作层；接收数据层数据更新的消息。
 
 
-### action （动作层）
+#### action （动作层）
 
   ```js
+
+	//action.js
 
 	let DispatcherObj = require('./../dispatcher/dispatcher');
 
@@ -129,9 +135,11 @@ flux最大的特点，就是数据的 “单向流动”。
 `Dispatcher.dispatch()`用来给消息派发器发送消息。
 
 
-### dispatcher （消息派发器）
+#### dispatcher （消息派发器）
 
   ```js
+
+	//dispatcher.js
 
 	let Dispatcher = require('flux').Dispatcher;
 	let AppDispatcher = new Dispatcher();
@@ -151,9 +159,11 @@ flux最大的特点，就是数据的 “单向流动”。
 `AppDispatcher.register()`用来通过动作层发送的消息执行对应的回调。
 
 
-### store （数据层）
+#### store （数据层）
 
   ```js
+
+	//store.js
 
 	let EventEmitter = require('events').EventEmitter;
 	let assign = require('object-assign');
@@ -182,9 +192,9 @@ flux最大的特点，就是数据的 “单向流动”。
 接收通过消息派发器发送的最新消息，进行数据更新。并执行消息派发器中调用的回调。
 
 
-## flux的优势和困境
+### flux的优势和困境
 
-### flux的优势
+#### flux的优势
 
 	1、数据状态变得稳定同时行为可预测
 
@@ -211,7 +221,7 @@ flux最大的特点，就是数据的 “单向流动”。
 	对单个应用而言dispatcher是单例的，最主要的是dispatcher是数据的分发中心，所有的数据都需要流经dispatcher，dispatcher管理不同action于store之间的关系。因为所有数据都必须在dispatcher这里留下一笔，基于此我们可以做很多有趣的事情，各种debug工具、动作回滚、日志记录甚至权限拦截之类的都是可以的。
 
 
-### flux的困境
+#### flux的困境
 
 	1、过多的样板代码
 
@@ -233,6 +243,6 @@ flux最大的特点，就是数据的 “单向流动”。
 	4、至今还没有官方实现
 
 
-## 个人说明
+### 个人说明
 
 这个案例是结合阮一峰老师的[Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)和kuitos的[GitHub](https://github.com/kuitos/kuitos.github.io/issues/27)还有本人的一些解释来写的，如有解释不清楚或者写错的地方，希望看这两位大神的原教程或者联系本人邮箱：`a260496725@qq.com`
