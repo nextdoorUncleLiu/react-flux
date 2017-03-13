@@ -1,42 +1,42 @@
 # react-flux
 
-  flux是一种架构思想，和MVC类似，但是更加简单清晰，flux实现方法有很多种，本项目采用的是facebook官方实现。
+flux是一种架构思想，和MVC类似，但是更加简单清晰，flux实现方法有很多种，本项目采用的是facebook官方实现。
 
 
 ## 安装flux
 
   ```sh
-  npm install flux
+	npm install flux
   ```
 
 
 ## 了解flux
 
-  在使用flux之前，首先我们要了解清楚flux到底是干什么的，只有理解了它真正的意思，才能更好的运用它。
+在使用flux之前，首先我们要了解清楚flux到底是干什么的，只有理解了它真正的意思，才能更好的运用它。
 
   ```sh
 
-  -（view）视图层，展示内容，绑定动作（action），并接收数据层（store）通知的更新显示
+	-（view）视图层，展示内容，绑定动作（action），并接收数据层（store）通知的更新显示
 
-  -（controller）控制器，用来做告诉视图层（view）显示对应的内容；告诉动作层（action）视图层（view）做的动作；接收数据层（store）发送过来的最新消息，对视图层（view）显示的数据做更新
+	-（controller）控制器，用来做告诉视图层（view）显示对应的内容；告诉动作层（action）视图层（view）做的动作；接收数据层（store）发送过来的最新消息，对视图层（view）显示的数据做更新
 
-  -（action）动作层，通过视图层产生动作，并通知消息派发器（dispatcher）
+	-（action）动作层，通过视图层产生动作，并通知消息派发器（dispatcher）
 
-  -（dispatcher）消息派发器，接收动作层（action）的消息，并将此消息发送到数据层（store），执行对应的回调。
+	-（dispatcher）消息派发器，接收动作层（action）的消息，并将此消息发送到数据层（store），执行对应的回调。
 
-  -（store）数据层，用来接收消息派发器（dispatcher）发送的消息，根据接收的消息对存储的数据做对应的更新。
+	-（store）数据层，用来接收消息派发器（dispatcher）发送的消息，根据接收的消息对存储的数据做对应的更新。
 
   ```
 
-  flux最大的特点，就是数据的 “单向流动”。
+flux最大的特点，就是数据的 “单向流动”。
 
 
 ## flux实现
 
-  ### view （视图层） ###
+### view （视图层）
 
   ```js
-    import React,{Component} from 'react';
+	import React,{Component} from 'react';
 	export class View extends Component{
 		constructor(props){
 			super(props);
@@ -44,8 +44,8 @@
 		}
 		render(){
 			let itemHtml = this.props.list.map(function (oCurObj,nIndex) {
-			    return <li key={nIndex}>{oCurObj}</li>;
-			  });
+				return <li key={nIndex}>{oCurObj}</li>;
+			});
 			return (
 				<div>
 					<ul>
@@ -57,14 +57,14 @@
 		}
 	}
   ```
-  通过控制器传过来的值对相应的内容做渲染，并绑定事件。
+通过控制器传过来的值对相应的内容做渲染，并绑定事件。
 
 
-  ### controller（控制器） ###
+### controller（控制器）
 
   ```js
 
-    //Controller.jsx
+	//Controller.jsx
 	import React,{Component} from 'react';
 	let ListStore = require('./../store/store');
 	let Action = require('./../action/action');
@@ -102,10 +102,10 @@
 
   ```
 
-  这是视图层、动作层、数据层之间的一个控制器，用来把要显示的数据告诉视图层；在视图层做某些动作的时候，通过控制器告诉动作层；接收数据层数据更新的消息。
+这是视图层、动作层、数据层之间的一个控制器，用来把要显示的数据告诉视图层；在视图层做某些动作的时候，通过控制器告诉动作层；接收数据层数据更新的消息。
 
 
-  ### action （动作层） ###
+### action （动作层）
 
   ```js
 
@@ -124,12 +124,12 @@
 
   ```
 
-  在视图层执行的动作，把当前的动作消息发送到数据层，通知数据层做出对应的操作。
+在视图层执行的动作，把当前的动作消息发送到数据层，通知数据层做出对应的操作。
 
-  `Dispatcher.dispatch()`用来给消息派发器发送消息。
+`Dispatcher.dispatch()`用来给消息派发器发送消息。
 
 
-  ### dispatcher （消息派发器） ###
+### dispatcher （消息派发器）
 
   ```js
 
@@ -146,12 +146,12 @@
 
   ```
 
-  接收通过动作层发送过来的消息，并把接收到的消息派发到数据层。注意，消息派发器只能有一个，而且是全局的。
+接收通过动作层发送过来的消息，并把接收到的消息派发到数据层。注意，消息派发器只能有一个，而且是全局的。
 
-  `AppDispatcher.register()`用来通过动作层发送的消息执行对应的回调。
+`AppDispatcher.register()`用来通过动作层发送的消息执行对应的回调。
 
 
-  ### store （数据层） ###
+### store （数据层）
 
   ```js
 
@@ -177,14 +177,14 @@
 
   ```
 
-  这里有用到一个node.js中`events`对象中的`EventEmitter`方法，这个方法是用来做事件触发与事件监听器功能的封装。此处不做详细赘述。
+这里有用到一个node.js中`events`对象中的`EventEmitter`方法，这个方法是用来做事件触发与事件监听器功能的封装。此处不做详细赘述。
 
-  接收通过消息派发器发送的最新消息，进行数据更新。并执行消息派发器中调用的回调。
+接收通过消息派发器发送的最新消息，进行数据更新。并执行消息派发器中调用的回调。
 
 
-  ## flux的优势和困境 ##
+## flux的优势和困境
 
-  ### flux的优势 ###
+### flux的优势
 
 	1、数据状态变得稳定同时行为可预测
 
@@ -211,7 +211,7 @@
 	对单个应用而言dispatcher是单例的，最主要的是dispatcher是数据的分发中心，所有的数据都需要流经dispatcher，dispatcher管理不同action于store之间的关系。因为所有数据都必须在dispatcher这里留下一笔，基于此我们可以做很多有趣的事情，各种debug工具、动作回滚、日志记录甚至权限拦截之类的都是可以的。
 
 
-  ### flux的困境 ###
+### flux的困境
 
 	1、过多的样板代码
 
@@ -233,6 +233,6 @@
 	4、至今还没有官方实现
 
 
-  ## 个人说明 ##
+## 个人说明
 
-  这个案例是结合阮一峰老师的[Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)和kuitos的[GitHub](https://github.com/kuitos/kuitos.github.io/issues/27)还有本人的一些解释来写的，如有解释不清楚或者写错的地方，希望看这两位大神的原教程或者联系本人邮箱：`a260496725@qq.com`
+这个案例是结合阮一峰老师的[Flux 架构入门教程](http://www.ruanyifeng.com/blog/2016/01/flux.html)和kuitos的[GitHub](https://github.com/kuitos/kuitos.github.io/issues/27)还有本人的一些解释来写的，如有解释不清楚或者写错的地方，希望看这两位大神的原教程或者联系本人邮箱：`a260496725@qq.com`
